@@ -5,6 +5,8 @@ import { globalMiddleware } from './src/middlewares/auth.js';
 import { connectDb } from './src/config/dbConfig.js';
 import cors from 'cors'
 import AuthRouter from './src/routes/auth.js'
+import ContactRouter from './src/routes/contact.js'
+import SubscribeRouter from './src/routes/subscribe.js'
 
 
 dotenv.config();
@@ -21,6 +23,10 @@ app.use(morgan("dev"));
 app.use(globalMiddleware)
 //Auth Route
 app.use('/api', AuthRouter);
+app.use('/api', ContactRouter);
+app.use('/api', SubscribeRouter)
+
+
 
 app.get('/', (req, res) => {
     res.json({success: true, message: "Welcome to Healthy You"});
