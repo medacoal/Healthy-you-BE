@@ -11,7 +11,6 @@ const ContactSchema = new Schema({
     email: {
         type: String,
         required: true,
-        unique: true,
         lowercase: true,
         match: [
             /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
