@@ -7,6 +7,7 @@ import cors from 'cors'
 import AuthRouter from './src/routes/auth.js'
 import ContactRouter from './src/routes/contact.js'
 import SubscribeRouter from './src/routes/subscribe.js'
+import BlogRouter from './src/routes/blog.js'
 
 
 dotenv.config();
@@ -25,6 +26,8 @@ app.use(globalMiddleware)
 app.use('/api', AuthRouter);
 app.use('/api', ContactRouter);
 app.use('/api', SubscribeRouter)
+app.use('/api/blogs', BlogRouter)
+
 
 
 
