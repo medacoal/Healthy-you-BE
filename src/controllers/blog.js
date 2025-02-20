@@ -171,3 +171,36 @@ export const deleteBlog = async (req, res) => {
     }
 };
 
+export const deleteImagesFromBlog = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { removeImages } = req.body; // List of image public IDs
+
+        const blog = await Blog.findById(id);
+        if (!blog) {
+            return res.status(404).json({ success: false, message: "Blog not found" });
+        }
+
+        if (!removeImages || !Array.isArray(removeImages)) {
+            return res.status(400).json({ success: false, message: "Invalid image list" });
+        }
+
+        // Filter out images to delete
+        const updatedImages = blog.images.filter((image) => {
+            if (removeImages.includes(image.imagePublicId)) {
+                cloudinary.uploader.destroy(image.imagePublicId); // Delete from Cloudinary
+                return false; // Remove from array
+            }
+            return true;
+        });
+
+        // Update the blog's images
+        blog.images = updatedImages;
+        await blog.save();
+
+        res.json({ success: true, message: "Images deleted successfully", blog });
+    } catch (err) {
+        console.error("Error:", err);
+        res.status(500).json({ success: false, message: "Server Error" });
+    }
+};

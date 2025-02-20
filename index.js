@@ -31,6 +31,7 @@ app.use('/api/blogs', BlogRouter)
 
 
 
+
 app.get('/', (req, res) => {
     res.json({success: true, message: "Welcome to Healthy You"});
 });
